@@ -1,0 +1,17 @@
+<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+  <mat-card *cdkVirtualFor="let forum of posts; let i = index  templateCacheSize: 0" class="example-item">
+    <mat-card-header>
+      <div mat-card-avatar class="header-image">
+        {{i + 1}}
+        <img [src]="'assets/avatar1.png'">
+      </div>
+      <mat-card-title><a mat-list-item routerLink="/forum/{{forum.i_post}}">{{forum.title}}</a></mat-card-title>
+      <mat-card-subtitle>{{forum.user.name}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{forum.body}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</cdk-virtual-scroll-viewport>
