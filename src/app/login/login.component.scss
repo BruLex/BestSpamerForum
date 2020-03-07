@@ -1,0 +1,46 @@
+:host {
+  > div {
+    height: 100%;
+    width: 100%;
+    background-color: #303030;
+    position: absolute;
+  }
+
+  ::ng-deep mat-tab-header {
+    display: none;
+  }
+
+  mat-card {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 350px;
+    text-align: center;
+
+    mat-card-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -25%;
+      width: 300px;
+      transform: translate(-50%, -50%);
+    }
+
+
+    mat-card-actions {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    mat-form-field, span {
+      flex: 1;
+    }
+  }
+}
