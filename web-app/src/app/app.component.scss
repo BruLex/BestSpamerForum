@@ -1,15 +1,15 @@
 mat-drawer-container {
-  height: calc(100% - 64px);
+    height: calc(100% - 64px);
 }
 
 mat-drawer {
-  width: 300px;
+    width: 300px;
 }
 
 .sidenav-content {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
 }
 

@@ -1,60 +1,60 @@
 .example-viewport {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 :host {
-  width: 100%;
-  height: 100%;
+    height: 100%;
+    width: 100%;
 
-  img {
-    height: 40px;
-    background-size: cover;
-    width: 40px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    object-fit: cover;
-  }
-
-  mat-card {
-    margin: 8px 200px;
-  }
-
-  a {
-    color: #ce93d8;
-    text-decoration: none;
-  }
-
-  .header-actions {
-    display: flex;
-    margin: 24px;
-    padding: 0 20%;
-  }
-
-  .header-checkbox {
-    display: flex;
-    justify-content: center;
-
-    mat-checkbox {
-      display: flex;
+    img {
+        background-size: cover;
+        border-radius: 50%;
+        flex-shrink: 0;
+        height: 40px;
+        object-fit: cover;
+        width: 40px;
     }
-  }
 
-  .edit-btn {
-    position: absolute;
-    right: 40px;
-    top: 12px;
-  }
+    mat-card {
+        margin: 8px 200px;
+    }
 
-  p {
-    margin-left: 56px;
-  }
+    a {
+        color: #ce93d8;
+        text-decoration: none;
+    }
+
+    .header-actions {
+        display: flex;
+        margin: 24px;
+        padding: 0 20%;
+    }
+
+    .header-checkbox {
+        display: flex;
+        justify-content: center;
+
+        mat-checkbox {
+            display: flex;
+        }
+    }
+
+    .edit-btn {
+        position: absolute;
+        right: 40px;
+        top: 12px;
+    }
+
+    p {
+        margin-left: 56px;
+    }
 
 }
 
 ::ng-deep .add-dlg-content {
-  display: flex !important;
-  flex-direction: column;
-  width: 750px;
-  height: 500px;
+    display: flex !important;
+    flex-direction: column;
+    height: 500px;
+    width: 750px;
 }

@@ -13,88 +13,88 @@ import { LoginComponent } from './login/login.component';
 import { AppGuard } from './app.guard';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: '',
-    component: AppComponent,
-    canActivate: [AppGuard],
-    canActivateChild: [AppGuard],
-    children: [
-      {
-        path: 'forum',
-        component: ForumComponent,
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: '',
+        component: AppComponent,
+        canActivate: [AppGuard],
+        canActivateChild: [AppGuard],
         children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'list'
-          },
-          {
-            path: 'list',
-            component: ForumListComponent
-          },
-          {
-            path: ':id',
-            component: ForumPageComponent
-          }
-        ],
-      },
-      {
-        path: 'myposts',
-        component: MyPostsComponent,
-        children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'list'
-          },
-          {
-            path: 'list',
-            component: MyPostsListComponent,
-          }
+            {
+                path: 'forum',
+                component: ForumComponent,
+                children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'list'
+                    },
+                    {
+                        path: 'list',
+                        component: ForumListComponent
+                    },
+                    {
+                        path: ':id',
+                        component: ForumPageComponent
+                    }
+                ]
+            },
+            {
+                path: 'myposts',
+                component: MyPostsComponent,
+                children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'list'
+                    },
+                    {
+                        path: 'list',
+                        component: MyPostsListComponent
+                    }
+                ]
+            },
+            {
+                path: 'top25users',
+                component: Top25UsersComponent,
+                children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'list'
+                    },
+                    {
+                        path: 'list',
+                        component: Top25UsersListComponent
+                    }
+                ]
+            },
+            {
+                path: 'top5wposts',
+                component: Top5WPostsComponent,
+                children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'list'
+                    },
+                    {
+                        path: 'list',
+                        component: Top5WPostsListComponent
+                    }
+                ]
+            },
+            {
+                path: '**',
+                redirectTo: ''
+            }
         ]
-      },
-      {
-        path: 'top25users',
-        component: Top25UsersComponent,
-        children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'list'
-          },
-          {
-            path: 'list',
-            component: Top25UsersListComponent,
-          }
-        ]
-      },
-      {
-        path: 'top5wposts',
-        component: Top5WPostsComponent,
-        children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'list'
-          },
-          {
-            path: 'list',
-            component: Top5WPostsListComponent,
-          }
-        ],
-      },
-      {
+    },
+    {
         path: '**',
         redirectTo: ''
-      }
-    ]
-  },
-  {
-    path: '**',
-    redirectTo: ''
-  }];
+    }];
 export const ROUTING = RouterModule.forRoot(routes);

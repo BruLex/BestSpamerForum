@@ -1,36 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
-//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "@angular/material/prebuilt-themes/pink-bluegrey.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+}
 
 
 ::-webkit-scrollbar {
-  width: 10px;
-  border-radius: 4px;
-  margin: 2px 0;
+    border-radius: 4px;
+    margin: 2px 0;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-  margin: 2px 0;
+    background: #f1f1f1;
+    border-radius: 4px;
+    margin: 2px 0;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  margin: 2px 0;
-
-  border-radius: 4px;
-
+    background: #888;
+    border-radius: 4px;
+    margin: 2px 0;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
-  border-radius: 4px;
-
+    background: #555;
+    border-radius: 4px;
 }

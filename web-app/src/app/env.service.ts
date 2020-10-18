@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class EnvService {
 
-  user: User;
+    user: User;
 
-  constructor() {
-  }
+    constructor() {
+    }
 
 
-  getSID() {
-    return localStorage.getItem('SID') || '';
-  }
+    getSID() {
+        return localStorage.getItem('SID') || '';
+    }
 
-  setSID(SID: string) {
-    localStorage.setItem('SID', SID);
-  }
+    setSID(SID: string) {
+        localStorage.setItem('SID', SID);
+    }
 
-  getUser() {
-    return localStorage.getItem('u');
+    getUser() {
+        return localStorage.getItem('u');
 
-  }
+    }
 
-  setUser(user: User) {
-    this.user = user;
-    localStorage.setItem('u', user.i_user.toString());
-  }
+    setUser(user: User) {
+        this.user = user;
+        localStorage.setItem('u', user.i_user.toString());
+    }
 }

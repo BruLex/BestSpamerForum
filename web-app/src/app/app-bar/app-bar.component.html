@@ -1,19 +1,21 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <button mat-icon-button
-    (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>Best spammer forum</span>
-    <span style="flex: 1 1 auto"></span>
+    <mat-toolbar-row>
+        <button
+                (click)="drawer.toggle()"
+                mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>Best spammer forum</span>
+        <span style="flex: 1 1 auto"></span>
 
-    <span style="margin-right: 16px">
+        <span style="margin-right: 16px">
       Welcome: {{user.name}}
     </span>
 
-    <button mat-raised-button color="warn"
-    (click)="logout()">
-      Logout
-    </button>
-  </mat-toolbar-row>
+        <button
+                (click)="logout()" color="warn"
+                mat-raised-button>
+            Logout
+        </button>
+    </mat-toolbar-row>
 </mat-toolbar>
