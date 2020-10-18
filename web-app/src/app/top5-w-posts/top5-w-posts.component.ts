@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./top5-w-posts.component.scss']
 })
 export class Top5WPostsComponent implements OnInit {
+    constructor() {}
 
-    constructor() {
-    }
-
-    ngOnInit() {
-    }
-
+    ngOnInit() {}
 }

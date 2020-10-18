@@ -1,4 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
+
 import { ForumListComponent } from './forums-list/list/forum-list.component';
 import { ForumPageComponent } from './forums-list/view/forum-page.component';
 import { ForumComponent } from './forums-list/forum.component';
@@ -96,5 +97,6 @@ const routes: Routes = [
     {
         path: '**',
         redirectTo: ''
-    }];
+    }
+];
 export const ROUTING = RouterModule.forRoot(routes);

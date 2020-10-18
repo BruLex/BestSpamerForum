@@ -4,12 +4,9 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class EnvService {
-
     user: User;
 
-    constructor() {
-    }
-
+    constructor() {}
 
     getSID() {
         return localStorage.getItem('SID') || '';
@@ -21,7 +18,6 @@ export class EnvService {
 
     getUser() {
         return localStorage.getItem('u');
-
     }
 
     setUser(user: User) {

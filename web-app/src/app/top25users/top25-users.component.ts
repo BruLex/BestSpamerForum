@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./top25-users.component.scss']
 })
 export class Top25UsersComponent implements OnInit {
+    constructor() {}
 
-    constructor() {
-    }
-
-    ngOnInit() {
-    }
-
+    ngOnInit() {}
 }

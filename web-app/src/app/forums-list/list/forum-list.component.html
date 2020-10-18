@@ -2,14 +2,16 @@
     <mat-card *cdkVirtualFor="let forum of posts; templateCacheSize: 0" class="example-item">
         <mat-card-header>
             <div class="example-header-image" mat-card-avatar>
-                <img [src]="'assets/avatar1.png'">
+                <img [src]="'assets/avatar1.png'" />
             </div>
-            <mat-card-title><a mat-list-item routerLink="/forum/{{forum.i_post}}">{{forum.title}}</a></mat-card-title>
-            <mat-card-subtitle>{{forum.user.name}}</mat-card-subtitle>
+            <mat-card-title
+                ><a mat-list-item routerLink="/forum/{{ forum.i_post }}">{{ forum.title }}</a></mat-card-title
+            >
+            <mat-card-subtitle>{{ forum.user.name }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <p>
-                {{forum.body}}
+                {{ forum.body }}
             </p>
         </mat-card-content>
     </mat-card>

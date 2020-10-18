@@ -1,14 +1,8 @@
 <cdk-virtual-scroll-viewport class="example-viewport" itemSize="50">
     <div class="header-actions">
-        <button
-                (click)="dialog.open(addDlg)" class="add-btn" color="primary"
-                mat-raised-button>
-            Add new
-        </button>
+        <button (click)="dialog.open(addDlg)" class="add-btn" color="primary" mat-raised-button>Add new</button>
         <span style="flex: 1"></span>
-        <button
-                [disabled]="!listToRemove.length" class="del-btn" color="primary"
-                mat-raised-button>
+        <button [disabled]="!listToRemove.length" class="del-btn" color="primary" mat-raised-button>
             Delete selected
         </button>
     </div>
@@ -16,32 +10,28 @@
     <mat-card *cdkVirtualFor="let forum of posts; templateCacheSize: 0" class="example-item">
         <mat-card-header>
             <div class="header-checkbox" mat-card-avatar>
-                <mat-checkbox
-                        (change)="changeCheck(forum, $event.checked)">
-                </mat-checkbox>
+                <mat-checkbox (change)="changeCheck(forum, $event.checked)"> </mat-checkbox>
             </div>
-            <mat-card-title><a mat-list-item routerLink="/forum/{{forum.i_post}}">{{forum.title}}</a></mat-card-title>
-            <button
-                    (click)="editedPost=forum; dialog.open(editDlg)" class="edit-btn"
-                    mat-icon-button>
+            <mat-card-title
+                ><a mat-list-item routerLink="/forum/{{ forum.i_post }}">{{ forum.title }}</a></mat-card-title
+            >
+            <button (click)="editedPost = forum; dialog.open(editDlg)" class="edit-btn" mat-icon-button>
                 <mat-icon>edit</mat-icon>
             </button>
-
         </mat-card-header>
         <mat-card-content>
             <p>
-                {{forum.body}}
+                {{ forum.body }}
             </p>
         </mat-card-content>
     </mat-card>
 </cdk-virtual-scroll-viewport>
 
-
 <ng-template #addDlg>
     <h2 matDialogTitle>Add new post</h2>
     <mat-dialog-content class="add-dlg-content">
         <mat-form-field>
-            <input #title matInput placeholder="Title" value="Sushi">
+            <input #title matInput placeholder="Title" value="Sushi" />
         </mat-form-field>
 
         <mat-form-field>
@@ -50,28 +40,26 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button color="primary" mat-flat-button matDialogClose>Cancel</button>
-        <button (click)="addPost(title.value, inputArea.value)" color="primary" mat-flat-button matDialogClose>Add
+        <button (click)="addPost(title.value, inputArea.value)" color="primary" mat-flat-button matDialogClose>
+            Add
         </button>
     </mat-dialog-actions>
 </ng-template>
 
 <ng-template #editDlg>
-    <h2 matDialogTitle>Edit post "{{editedPost.title}}"</h2>
+    <h2 matDialogTitle>Edit post "{{ editedPost.title }}"</h2>
     <mat-dialog-content class="add-dlg-content">
         <mat-form-field>
-            <input #title [value]="editedPost.title" matInput placeholder="Title">
+            <input #title [value]="editedPost.title" matInput placeholder="Title" />
         </mat-form-field>
         <mat-form-field>
-      <textarea
-          #inputArea [value]="editedPost.body" mat-autosize
-          matInput
-          placeholder="Body">
-      </textarea>
+            <textarea #inputArea [value]="editedPost.body" mat-autosize matInput placeholder="Body"> </textarea>
         </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button color="primary" mat-flat-button matDialogClose>Cancel</button>
-        <button (click)="updatePost(title.value, inputArea.value)" color="primary" mat-flat-button matDialogClose>Update
+        <button (click)="updatePost(title.value, inputArea.value)" color="primary" mat-flat-button matDialogClose>
+            Update
         </button>
     </mat-dialog-actions>
 </ng-template>

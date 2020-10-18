@@ -27,7 +27,6 @@
             width: 300px;
         }
 
-
         mat-card-actions {
             bottom: 24px;
             position: absolute;
@@ -39,7 +38,8 @@
             flex-direction: column;
         }
 
-        mat-form-field, span {
+        mat-form-field,
+        span {
             flex: 1;
         }
     }

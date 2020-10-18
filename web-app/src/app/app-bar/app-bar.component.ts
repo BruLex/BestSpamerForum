@@ -1,20 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
+
 import { AppComponent } from '../app.component';
-import { MatDrawer } from '@angular/material';
 
 @Component({
     selector: 'app-bar[user]',
     templateUrl: './app-bar.component.html'
 })
 export class AppBarComponent implements OnInit {
-
     drawer: MatDrawer;
 
     @Input() user: User;
 
-    constructor(private appComponent: AppComponent) {
-
-    }
+    constructor(private appComponent: AppComponent) {}
 
     ngOnInit() {
         this.drawer = this.appComponent.drawer;
@@ -23,5 +21,4 @@ export class AppBarComponent implements OnInit {
     logout() {
         this.appComponent.logout();
     }
-
 }

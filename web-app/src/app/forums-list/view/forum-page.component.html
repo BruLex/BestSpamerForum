@@ -2,15 +2,17 @@
     <mat-card class="main-container">
         <mat-card-header>
             <div class="example-header-image" mat-card-avatar>
-                <img [src]="'assets/avatar1.png'">
+                <img [src]="'assets/avatar1.png'" />
             </div>
-            <mat-card-title><a mat-list-item routerLink="2">{{post.title}}</a></mat-card-title>
-            <mat-card-subtitle>{{post.user.name}}</mat-card-subtitle>
+            <mat-card-title
+                ><a mat-list-item routerLink="2">{{ post.title }}</a></mat-card-title
+            >
+            <mat-card-subtitle>{{ post.user.name }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-       <span style="white-space: pre-line">
-        {{post.body}}
-       </span>
+            <span style="white-space: pre-line">
+                {{ post.body }}
+            </span>
         </mat-card-content>
     </mat-card>
 
@@ -22,16 +24,14 @@
             <mat-card class="write-comment">
                 <mat-card-header>
                     <div class="example-header-image" mat-card-avatar>
-                        <img [src]="'assets/avatar1.png'">
+                        <img [src]="'assets/avatar1.png'" />
                     </div>
                 </mat-card-header>
                 <mat-card-content style="display: flex; flex-direction: row">
                     <mat-form-field class="example-full-width">
                         <textarea #inputArea mat-autosize matInput placeholder="Leave a comment"></textarea>
                     </mat-form-field>
-                    <button
-                            (click)="sendComment(inputArea.value); inputArea.value = ''"
-                            mat-icon-button>
+                    <button (click)="sendComment(inputArea.value); inputArea.value = ''" mat-icon-button>
                         <mat-icon>send</mat-icon>
                     </button>
                 </mat-card-content>
@@ -39,30 +39,34 @@
             <mat-card *ngFor="let comment of post.comments" class="comment">
                 <mat-card-header>
                     <div class="example-header-image" mat-card-avatar>
-                        <img [src]="'assets/avatar1.png'">
+                        <img [src]="'assets/avatar1.png'" />
                     </div>
                     <mat-card-title>
-                        <a mat-list-item routerLink="2">{{comment.user.name}}</a>
+                        <a mat-list-item routerLink="2">{{ comment.user.name }}</a>
                         <div class="rating-container">
                             <button
-                                    (click)="downCarma(comment)" [disabled]="isDisliked(comment)"
-                                    color="warn"
-                                    mat-icon-button>
+                                (click)="downCarma(comment)"
+                                [disabled]="isDisliked(comment)"
+                                color="warn"
+                                mat-icon-button
+                            >
                                 <mat-icon>thumb_down</mat-icon>
                             </button>
-                            {{(comment.rating > 0 ? '+' : '') + comment.rating}}
+                            {{ (comment.rating > 0 ? '+' : '') + comment.rating }}
                             <button
-                                    (click)="upCarma(comment)" [disabled]="isLiked(comment)"
-                                    [style.color]="isLiked(comment) ? null : 'limegreen'"
-                                    mat-icon-button>
+                                (click)="upCarma(comment)"
+                                [disabled]="isLiked(comment)"
+                                [style.color]="isLiked(comment) ? null : 'limegreen'"
+                                mat-icon-button
+                            >
                                 <mat-icon>thumb_up</mat-icon>
                             </button>
                         </div>
                     </mat-card-title>
-                    <mat-card-subtitle>Carma: {{comment.user.carma}}</mat-card-subtitle>
+                    <mat-card-subtitle>Carma: {{ comment.user.carma }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <span style="white-space: pre-line">{{comment.comment}}</span>
+                    <span style="white-space: pre-line">{{ comment.comment }}</span>
                 </mat-card-content>
             </mat-card>
         </mat-card-content>

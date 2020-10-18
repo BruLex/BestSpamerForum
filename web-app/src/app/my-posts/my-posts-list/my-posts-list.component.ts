@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
 import { ApiService } from '../../api.service';
-import { MatDialog } from '@angular/material';
 
 export interface User {
     i_user?: number;
@@ -27,10 +28,7 @@ export class MyPostsListComponent {
 
     editedPost: PostItem;
 
-    constructor(
-        private apiSrv: ApiService,
-        public dialog: MatDialog
-    ) {
+    constructor(private apiSrv: ApiService, public dialog: MatDialog) {
         this.fetchMPyosts();
     }
 

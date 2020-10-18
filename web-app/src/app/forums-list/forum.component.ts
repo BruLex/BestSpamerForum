@@ -4,5 +4,4 @@ import { Component } from '@angular/core';
     templateUrl: './forum.component.html',
     styleUrls: ['./forum.component.scss']
 })
-export class ForumComponent {
-}
+export class ForumComponent {}

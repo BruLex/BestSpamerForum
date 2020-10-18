@@ -1,14 +1,14 @@
-@import "@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
 body {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
     margin: 0;
 }
-
 
 ::-webkit-scrollbar {
     border-radius: 4px;

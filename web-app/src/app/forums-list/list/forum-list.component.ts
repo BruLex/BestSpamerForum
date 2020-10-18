@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { ApiService } from '../../api.service';
 
 export interface User {
@@ -31,5 +32,4 @@ export class ForumListComponent {
             this.posts = posts;
         });
     }
-
 }

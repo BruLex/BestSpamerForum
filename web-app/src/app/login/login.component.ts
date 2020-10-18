@@ -1,30 +1,29 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
 import { ApiService } from '../api.service';
 import { EnvService } from '../env.service';
-import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
     stepIndex = 0;
 
-    @ViewChild('loginInput', { static: false }) loginInput: ElementRef;
-    @ViewChild('passInput', { static: false }) passInput: ElementRef;
-    @ViewChild('newLoginInput', { static: false }) newLoginInput: ElementRef;
-    @ViewChild('newPassInput', { static: false }) newPassInput: ElementRef;
-    @ViewChild('newReEnterPassInput', { static: false }) newReEnterPassInput: ElementRef;
+    @ViewChild('loginInput') loginInput: ElementRef;
+    @ViewChild('passInput') passInput: ElementRef;
+    @ViewChild('newLoginInput') newLoginInput: ElementRef;
+    @ViewChild('newPassInput') newPassInput: ElementRef;
+    @ViewChild('newReEnterPassInput') newReEnterPassInput: ElementRef;
 
     constructor(
         private snackBar: MatSnackBar,
         private apiSrv: ApiService,
         private envSrv: EnvService,
         private router: Router
-    ) {
-    }
+    ) {}
 
     openSnackBar(message: string, action?: string) {
         this.snackBar.open(message, action || 'Close', {
@@ -49,9 +48,8 @@ export class LoginComponent {
             resp => {
                 if (resp.success) {
                     this.openSnackBar('User created successfully');
-                    this.newLoginInput.nativeElement.value =
-                        this.newPassInput.nativeElement.value =
-                            this.newReEnterPassInput.nativeElement.value = '';
+                    this.newLoginInput.nativeElement.value = this.newPassInput.nativeElement.value = this.newReEnterPassInput.nativeElement.value =
+                        '';
                     this.stepIndex = 0;
                 } else {
                     this.openSnackBar('User creation failed');
@@ -69,14 +67,13 @@ export class LoginComponent {
             return;
         }
         this.apiSrv.post('login', { login, password }).subscribe(resp => {
-                if (resp.success) {
-                    this.openSnackBar('Success, SID: ' + resp.data.session_id);
-                    this.envSrv.setSID(resp.data.session_id);
-                    this.router.navigate(['/']);
-                } else {
-                    this.openSnackBar('Login failed' + resp.data || '');
-                }
+            if (resp.success) {
+                this.openSnackBar('Success, SID: ' + resp.data.session_id);
+                this.envSrv.setSID(resp.data.session_id);
+                this.router.navigate(['/']);
+            } else {
+                this.openSnackBar('Login failed' + resp.data || '');
             }
-        );
+        });
     }
 }

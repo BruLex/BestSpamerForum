@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDrawer } from '@angular/material';
+import { MatDrawer } from '@angular/material/sidenav';
+
 import { ApiService } from './api.service';
 import { EnvService } from './env.service';
 
@@ -14,11 +15,7 @@ export class AppComponent implements OnInit {
 
     @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
 
-    constructor(
-        public envSrv: EnvService,
-        private apiSrv: ApiService,
-        private route: Router
-    ) {
+    constructor(public envSrv: EnvService, private apiSrv: ApiService, private route: Router) {
         this.updateStatusOfAccess();
     }
 
@@ -28,7 +25,7 @@ export class AppComponent implements OnInit {
 
     updateStatusOfAccess() {
         if (this.noAccessToCreate) {
-            this.apiSrv.get('can_comment').subscribe(resp => this.noAccessToCreate = !resp.success);
+            this.apiSrv.get('can_comment').subscribe(resp => (this.noAccessToCreate = !resp.success));
         }
     }
 

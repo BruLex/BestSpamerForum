@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { map } from 'rxjs/operators';
+
 import { ApiService } from '../../api.service';
 import { PostItem } from '../list/forum-list.component';
 import { EnvService } from '../../env.service';
@@ -24,20 +26,24 @@ export class ForumPageComponent implements OnInit {
         this.apiSrv.get('restrictedwords').subscribe((resp: { word: string }[]) => {
             this.restrictedwords = resp;
 
-            this.wordsRegExp = new RegExp(`${ resp.map(({ word }) => `\\b${ word }`).join('|') }`, 'g');
+            this.wordsRegExp = new RegExp(`${resp.map(({ word }) => `\\b${word}`).join('|')}`, 'g');
             console.log(this.wordsRegExp);
         });
     }
 
     ngOnInit() {
-        this.route.paramMap.pipe(map(paramMap => {
-            this.apiSrv.get('posts/' + paramMap.get('id')).subscribe(resp => {
-                this.post = resp;
-                this.post.comments.forEach(commentObj => {
-                    commentObj.comment = commentObj.comment.replace(this.wordsRegExp, '****');
-                });
-            });
-        })).subscribe();
+        this.route.paramMap
+            .pipe(
+                map(paramMap => {
+                    this.apiSrv.get('posts/' + paramMap.get('id')).subscribe(resp => {
+                        this.post = resp;
+                        this.post.comments.forEach(commentObj => {
+                            commentObj.comment = commentObj.comment.replace(this.wordsRegExp, '****');
+                        });
+                    });
+                })
+            )
+            .subscribe();
     }
 
     upCarma(comment) {
@@ -61,7 +67,6 @@ export class ForumPageComponent implements OnInit {
             this.updatePost();
             this.appComp.updateStatusOfAccess();
         });
-
     }
 
     updatePost() {
