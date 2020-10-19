@@ -3,6 +3,16 @@
     width: 100%;
 }
 
+::ng-deep {
+    .add-dlg-content {
+        // stylelint-disable-next-line declaration-no-important -- We should change container
+        display: flex !important;
+        flex-direction: column;
+        height: 500px;
+        width: 750px;
+    }
+}
+
 :host {
     height: 100%;
     width: 100%;
@@ -49,11 +59,4 @@
     p {
         margin-left: 56px;
     }
-}
-
-::ng-deep .add-dlg-content {
-    display: flex !important;
-    flex-direction: column;
-    height: 500px;
-    width: 750px;
 }

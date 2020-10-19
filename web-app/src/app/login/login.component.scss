@@ -6,8 +6,10 @@
         width: 100%;
     }
 
-    ::ng-deep mat-tab-header {
-        display: none;
+    ::ng-deep {
+        mat-tab-header {
+            display: none;
+        }
     }
 
     mat-card {

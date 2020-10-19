@@ -30,7 +30,9 @@
             </mat-tab-group>
         </mat-card-content>
         <mat-card-actions align="end">
-            <a (click)="stepIndex = stepIndex === 1 ? 0 : 1" color="primary" mat-button>{{ stepIndex === 1 ? 'Cancel' : 'Sign up' }}</a>
+            <a (click)="stepIndex = stepIndex === 1 ? 0 : 1" color="primary" mat-button>{{
+                stepIndex === 1 ? 'Cancel' : 'Sign up'
+            }}</a>
             <button (click)="stepIndex === 1 ? createUser() : login()" color="primary" mat-raised-button>
                 {{ stepIndex === 1 ? 'Create' : 'Sign in' }}
             </button>

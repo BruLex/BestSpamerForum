@@ -11,7 +11,7 @@
         width: 40px;
     }
 
-    mat-card.main-container {
+    .main-container {
         margin: 8px 200px;
     }
 
@@ -21,12 +21,14 @@
     }
 
     .comments-header {
-        ::ng-deep .mat-card-header-text {
-            margin: 0 auto;
+        ::ng-deep {
+            .mat-card-header-text {
+                margin: 0 auto;
+            }
         }
     }
 
-    mat-card.comment {
+    .comment {
         background: rgba(255, 255, 255, 0.2);
 
         ::ng-deep {
@@ -47,12 +49,16 @@
 
         &.mat-focused {
             ::ng-deep {
-                label.mat-form-field-label {
-                    color: #fff;
+                label {
+                    &.mat-form-field-label {
+                        color: #fff;
+                    }
                 }
 
-                span.mat-form-field-ripple {
-                    background-color: #fff;
+                span {
+                    &.mat-form-field-ripple {
+                        background-color: #fff;
+                    }
                 }
 
                 .mat-input-element {
