@@ -1,32 +1,35 @@
 import { RouterModule, Routes } from '@angular/router';
+import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { ModuleWithProviders } from '@angular/core';
 
 import { ForumListComponent } from './forums-list/list/forum-list.component';
 import { ForumPageComponent } from './forums-list/view/forum-page.component';
-import { ForumComponent } from './forums-list/forum.component';
 import { AppComponent } from './app.component';
-import { MyPostsComponent } from './my-posts/my-posts.component';
-import { MyPostsListComponent } from './my-posts/my-posts-list/my-posts-list.component';
-import { Top25UsersComponent } from './top25users/top25-users.component';
-import { Top5WPostsComponent } from './top5-w-posts/top5-w-posts.component';
-import { Top5WPostsListComponent } from './top5-w-posts/top5-w-posts-list/top5-w-posts-list.component';
-import { Top25UsersListComponent } from './top25users/top25-users-list/top25-users-list.component';
+import { MyPostsListComponent } from './my-posts/my-posts-list.component';
+// import { Top5WPostsListComponent } from './top5-w-posts/top5-w-posts-list.component';
+// import { Top25UsersListComponent } from './top25users/top25-users-list.component';
 import { LoginComponent } from './login/login.component';
-import { AppGuard } from './app.guard';
 
 const routes: Routes = [
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: { authGuardPipe: () => redirectLoggedInTo(['dashboard']) }
     },
     {
-        path: '',
+        path: 'dashboard',
         component: AppComponent,
-        canActivate: [AppGuard],
-        canActivateChild: [AppGuard],
+        canActivate: [AngularFireAuthGuard],
+        data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
         children: [
             {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'forum'
+            },
+            {
                 path: 'forum',
-                component: ForumComponent,
                 children: [
                     {
                         path: '',
@@ -45,7 +48,6 @@ const routes: Routes = [
             },
             {
                 path: 'myposts',
-                component: MyPostsComponent,
                 children: [
                     {
                         path: '',
@@ -57,46 +59,40 @@ const routes: Routes = [
                         component: MyPostsListComponent
                     }
                 ]
-            },
-            {
-                path: 'top25users',
-                component: Top25UsersComponent,
-                children: [
-                    {
-                        path: '',
-                        pathMatch: 'full',
-                        redirectTo: 'list'
-                    },
-                    {
-                        path: 'list',
-                        component: Top25UsersListComponent
-                    }
-                ]
-            },
-            {
-                path: 'top5wposts',
-                component: Top5WPostsComponent,
-                children: [
-                    {
-                        path: '',
-                        pathMatch: 'full',
-                        redirectTo: 'list'
-                    },
-                    {
-                        path: 'list',
-                        component: Top5WPostsListComponent
-                    }
-                ]
-            },
-            {
-                path: '**',
-                redirectTo: ''
             }
+            // {
+            //     path: 'top25users',
+            //     children: [
+            //         {
+            //             path: '',
+            //             pathMatch: 'full',
+            //             redirectTo: 'list'
+            //         },
+            //         {
+            //             path: 'list',
+            //             component: Top25UsersListComponent
+            //         }
+            //     ]
+            // },
+            // {
+            //     path: 'top5wposts',
+            //     children: [
+            //         {
+            //             path: '',
+            //             pathMatch: 'full',
+            //             redirectTo: 'list'
+            //         },
+            //         {
+            //             path: 'list',
+            //             component: Top5WPostsListComponent
+            //         }
+            //     ]
+            // }
         ]
     },
     {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'dashboard'
     }
 ];
-export const ROUTING = RouterModule.forRoot(routes);
+export const ROUTING: ModuleWithProviders<RouterModule> = RouterModule.forRoot(routes);

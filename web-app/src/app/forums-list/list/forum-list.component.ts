@@ -1,35 +1,19 @@
 import { Component } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
-import { ApiService } from '../../api.service';
+import { Observable } from 'rxjs';
 
-export interface User {
-    i_user?: number;
-    name: string;
-    iconImg?: string;
-}
-
-export interface PostItem {
-    user: User;
-    i_post: number;
-    title: string;
-    body: string;
-    comments: any[];
-}
+import { Post } from '../../types';
 
 @Component({
     templateUrl: './forum-list.component.html',
     styleUrls: ['./forum-list.component.scss']
 })
 export class ForumListComponent {
-    posts: PostItem[] = [];
+    readonly posts$: Observable<Post[]>;
+    private itemsCollection: AngularFirestoreCollection<Post> = this.store.collection<Post>('posts');
 
-    constructor(private apiSrv: ApiService) {
-        this.getAllForums();
-    }
-
-    getAllForums() {
-        this.apiSrv.get('posts').subscribe(posts => {
-            this.posts = posts;
-        });
+    constructor(private store: AngularFirestore) {
+        this.posts$ = this.itemsCollection.valueChanges({ idField: 'i_post' });
     }
 }

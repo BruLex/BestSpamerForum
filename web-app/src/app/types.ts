@@ -1,19 +1,21 @@
-interface User {
-    i_user: number;
-    name: string;
-    carma: number;
-    password?: string;
-}
+import { User } from 'firebase';
 
-interface Post {
-    i_post: number;
+export interface Post {
+    user?: User;
+    i_post?: string;
+    ownerUid?: string;
     title: string;
     body: string;
     comments?: Comment[];
 }
 
-interface Comment {
-    i_comment: number;
+export interface Comment {
     comment: string;
-    i_owner: number;
+    ownerUid: string;
+    rating: number;
+    owner?: Partial<User>;
+}
+
+export interface BanWord {
+    word: string;
 }

@@ -1,24 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
-import { AppComponent } from '../app.component';
+import { Observable } from 'rxjs';
+
+import { User } from 'firebase';
 
 @Component({
-    selector: 'app-bar[user]',
+    selector: 'app-bar',
     templateUrl: './app-bar.component.html'
 })
-export class AppBarComponent implements OnInit {
-    drawer: MatDrawer;
+export class AppBarComponent {
+    readonly user$: Observable<User> = this.auth.user;
 
-    @Input() user: User;
+    @Input() drawer: MatDrawer;
 
-    constructor(private appComponent: AppComponent) {}
+    constructor(private auth: AngularFireAuth, private router: Router) {}
 
-    ngOnInit() {
-        this.drawer = this.appComponent.drawer;
+    toggleMenu(): void {
+        this.drawer.toggle();
     }
 
-    logout() {
-        this.appComponent.logout();
+    logout(): void {
+        this.auth.signOut().then(() => this.router.navigate(['/login']));
     }
 }

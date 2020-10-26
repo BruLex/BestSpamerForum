@@ -1,36 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 
-import { ApiService } from './api.service';
-import { EnvService } from './env.service';
-
+// TODO Refactor with Firebase
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-    notimplemented: boolean = this.envSrv.user.i_user !== 1;
-    noAccessToCreate = true;
+export class AppComponent {
+    // notImplemented: boolean = this.envSrv.user?.i_user !== 1;
+    // noAccessToCreate: boolean = true;
 
-    @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
+    @ViewChild(MatDrawer) drawer: MatDrawer;
 
-    constructor(public envSrv: EnvService, private apiSrv: ApiService, private route: Router) {
-        this.updateStatusOfAccess();
-    }
-
-    ngOnInit() {
-        console.log(this.drawer);
-    }
-
-    updateStatusOfAccess() {
-        if (this.noAccessToCreate) {
-            this.apiSrv.get('can_comment').subscribe(resp => (this.noAccessToCreate = !resp.success));
-        }
-    }
-
-    logout() {
-        this.apiSrv.get('logout').subscribe();
-        this.route.navigate(['/login']);
-    }
+    // TODO Refactor with Firebase
+    updateStatusOfAccess(): void {}
 }

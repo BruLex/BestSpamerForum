@@ -1,0 +1,54 @@
+<div class="header-actions">
+    <button (click)="addEditPost()" class="add-btn" color="primary" mat-raised-button>Add new</button>
+    <span flex></span>
+    <button
+        [disabled]="selectedPostsId.isEmpty()"
+        class="del-btn"
+        color="primary"
+        mat-raised-button
+        (click)="deleteSelected()"
+    >
+        Delete selected
+    </button>
+</div>
+<cdk-virtual-scroll-viewport class="example-viewport" itemSize="50">
+    <mat-card *cdkVirtualFor="let post of posts$ | async; templateCacheSize: 0" class="example-item">
+        <mat-card-header>
+            <div class="header-checkbox" mat-card-avatar>
+                <mat-checkbox
+                    [checked]="selectedPostsId.isSelected(post.i_post)"
+                    (change)="selectedPostsId.toggle(post.i_post)"
+                >
+                </mat-checkbox>
+            </div>
+            <mat-card-title>
+                <a mat-list-item [routerLink]="['/dashboard', 'forum', post.i_post]">{{ post.title }}</a>
+            </mat-card-title>
+            <button (click)="addEditPost(post)" class="edit-btn" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{ post.body }}</p>
+        </mat-card-content>
+    </mat-card>
+</cdk-virtual-scroll-viewport>
+
+<ng-template #addEditDlg>
+    <h2 *ngIf="dialogMode === 'add'" matDialogTitle>Add new post</h2>
+    <h2 *ngIf="dialogMode === 'edit'" matDialogTitle>Edit post "{{ addEditForm.get('title').value }}"</h2>
+    <mat-dialog-content class="add-dlg-content" [formGroup]="addEditForm">
+        <mat-form-field>
+            <input matInput required formControlName="title" placeholder="Title" />
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput mat-autosize formControlName="body" placeholder="Body"> </textarea>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button color="primary" mat-flat-button [mat-dialog-close]="false">Cancel</button>
+        <button color="primary" mat-flat-button [disabled]="addEditForm.invalid" [mat-dialog-close]="true">
+            {{ dialogMode === 'add' ? 'Add' : 'Update' }}
+        </button>
+    </mat-dialog-actions>
+</ng-template>

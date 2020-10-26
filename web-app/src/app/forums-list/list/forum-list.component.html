@@ -1,18 +1,9 @@
-<cdk-virtual-scroll-viewport class="example-viewport" itemSize="50">
-    <mat-card *cdkVirtualFor="let forum of posts; templateCacheSize: 0" class="example-item">
+<cdk-virtual-scroll-viewport itemSize="50" *ngIf="posts$ | async as posts">
+    <mat-card *cdkVirtualFor="let post of posts; templateCacheSize: 0" class="example-item">
         <mat-card-header>
-            <div class="example-header-image" mat-card-avatar>
-                <img [src]="'assets/avatar1.png'" />
-            </div>
-            <mat-card-title
-                ><a mat-list-item routerLink="/forum/{{ forum.i_post }}">{{ forum.title }}</a></mat-card-title
-            >
-            <mat-card-subtitle>{{ forum.user.name }}</mat-card-subtitle>
+            <mat-card-title>
+                <a [routerLink]="['/dashboard', 'forum', post.i_post]">{{ post.title }}</a>
+            </mat-card-title>
         </mat-card-header>
-        <mat-card-content>
-            <p>
-                {{ forum.body }}
-            </p>
-        </mat-card-content>
     </mat-card>
 </cdk-virtual-scroll-viewport>

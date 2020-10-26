@@ -1,86 +1,114 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
-import { map } from 'rxjs/operators';
+import { first, map, mergeMap, shareReplay } from 'rxjs/operators';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 
-import { ApiService } from '../../api.service';
-import { PostItem } from '../list/forum-list.component';
-import { EnvService } from '../../env.service';
-import { AppComponent } from '../../app.component';
+import { User } from 'firebase';
+
+import { BanWord, Comment, Post } from '../../types';
 
 @Component({
     templateUrl: './forum-page.component.html',
     styleUrls: ['./forum-page.component.scss']
 })
-export class ForumPageComponent implements OnInit {
-    post: PostItem;
+export class ForumPageComponent implements OnInit, OnDestroy {
+    post$: Observable<Post>;
+    owner$: Observable<Partial<User>>;
     restrictedwords: { word: string }[];
     wordsRegExp: RegExp;
 
+    private subs: Subscription[] = [];
+    private itemsCollection: AngularFirestoreCollection<Post> = this.store.collection<Post>('posts');
+
     constructor(
         private route: ActivatedRoute,
-        private apiSrv: ApiService,
-        private envSrv: EnvService,
-        private appComp: AppComponent
+        private store: AngularFirestore,
+        private auth: AngularFireAuth,
+        private afFunctions: AngularFireFunctions
     ) {
-        this.apiSrv.get('restrictedwords').subscribe((resp: { word: string }[]) => {
-            this.restrictedwords = resp;
-
-            this.wordsRegExp = new RegExp(`${resp.map(({ word }) => `\\b${word}`).join('|')}`, 'g');
-            console.log(this.wordsRegExp);
-        });
-    }
-
-    ngOnInit() {
-        this.route.paramMap
-            .pipe(
-                map(paramMap => {
-                    this.apiSrv.get('posts/' + paramMap.get('id')).subscribe(resp => {
-                        this.post = resp;
-                        this.post.comments.forEach(commentObj => {
-                            commentObj.comment = commentObj.comment.replace(this.wordsRegExp, '****');
+        this.post$ = this.route.paramMap.pipe(
+            first(),
+            mergeMap(
+                (paramMap): Observable<Post> =>
+                    this.itemsCollection
+                        .valueChanges({
+                            idField: 'i_post'
+                        })
+                        .pipe(
+                            map((records): Post => records.find(({ i_post }): boolean => i_post === paramMap.get('id')))
+                        )
+            ),
+            mergeMap(post => {
+                const users: Set<string> = new Set(post.comments.map(({ ownerUid }) => ownerUid));
+                return combineLatest(
+                    Array.from(users.values()).map(uid => this.afFunctions.httpsCallable('getUser')({ uid }))
+                ).pipe(
+                    map(users => {
+                        post.comments.forEach(comment => {
+                            const user: User = users.find(v => v.uid === comment.ownerUid);
+                            if (user) {
+                                comment.owner = { displayName: user.displayName, photoURL: user.photoURL };
+                            } else {
+                                comment.owner = { displayName: 'Unknown', photoURL: '' };
+                            }
                         });
-                    });
+                        return post;
+                    })
+                );
+            })
+        );
+
+        this.owner$ = this.post$.pipe(
+            mergeMap(
+                ({ ownerUid }): Observable<Partial<User>> =>
+                    this.afFunctions.httpsCallable('getUser')({ uid: ownerUid })
+            ),
+            shareReplay(1)
+        );
+    }
+
+    ngOnInit(): void {
+        this.subs.push(
+            this.store
+                .collection<BanWord>('ban_words')
+                .valueChanges()
+                .subscribe((resp: { word: string }[]): void => {
+                    this.restrictedwords = resp;
+                    this.wordsRegExp = new RegExp(`${resp.map(({ word }): string => `\\b${word}`).join('|')}`, 'g');
                 })
-            )
-            .subscribe();
+        );
     }
 
-    upCarma(comment) {
-        this.changeCarma(comment.i_comment, true);
+    ngOnDestroy(): void {
+        this.subs.forEach((sub): void => sub.unsubscribe());
     }
 
-    downCarma(comment) {
-        this.changeCarma(comment.i_comment, false);
+    manageRating(post: Post, comment: Comment, operation: 'down' | 'up'): void {
+        comment.rating ??= 0;
+        comment.rating = comment.rating + (operation === 'up' ? 1 : -1);
+        this.itemsCollection.doc(post.i_post).update(post);
     }
 
-    isLiked(comment: any) {
-        return comment.usersLiked.some(user => user.i_user === this.envSrv.user.i_user);
+    isLiked(comment: Comment): any {
+        return false;
     }
 
-    isDisliked(comment: any) {
-        return comment.usersDisliked.some(user => user.i_user === this.envSrv.user.i_user);
+    isDisliked(comment: Comment): any {
+        return false;
     }
 
-    sendComment(commentText) {
-        this.apiSrv.post('add_comment/', { comment: commentText, i_post: this.post.i_post }).subscribe(() => {
-            this.updatePost();
-            this.appComp.updateStatusOfAccess();
-        });
-    }
-
-    updatePost() {
-        this.apiSrv.get('posts/' + this.post.i_post).subscribe(resp => {
-            this.post = resp;
-            this.post.comments.forEach(commentObj => {
-                commentObj.comment = commentObj.comment.replace(this.wordsRegExp, '****');
+    sendComment(post: Post, comment: string): void {
+        this.auth.currentUser.then(user => {
+            post.comments.push({
+                rating: 0,
+                ownerUid: user.uid,
+                comment
             });
-        });
-    }
-
-    private changeCarma(iComment: number, isLiked: boolean): void {
-        this.apiSrv.post('change_rating/', { i_comment: iComment, liked: isLiked }).subscribe(() => {
-            this.updatePost();
+            this.itemsCollection.doc(post.i_post).update(post);
         });
     }
 }
