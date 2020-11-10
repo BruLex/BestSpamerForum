@@ -10,10 +10,6 @@ import { Post } from '../../types';
     styleUrls: ['./forum-list.component.scss']
 })
 export class ForumListComponent {
-    readonly posts$: Observable<Post[]>;
-    private itemsCollection: AngularFirestoreCollection<Post> = this.store.collection<Post>('posts');
-
-    constructor(private store: AngularFirestore) {
-        this.posts$ = this.itemsCollection.valueChanges({ idField: 'i_post' });
-    }
+    readonly posts$: Observable<Post[]> = this.store.collection<Post>('posts').valueChanges({ idField: 'i_post' });
+    constructor(private store: AngularFirestore) {}
 }

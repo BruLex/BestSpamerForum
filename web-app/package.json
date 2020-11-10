@@ -4,7 +4,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build",
+        "build": "ng build --prod --aot",
         "lint": "ng lint",
         "prettier": "prettier \"{**/*,*}.{js,ts,jsx,tsx,html,json,scss,css}\" --ignore-path .gitignore",
         "prettier-fix": "npm run prettier -- --write",

@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 import { first, map, mergeMap, shareReplay } from 'rxjs/operators';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { combineLatest, Observable, of, Subscription } from 'rxjs';
 
 import { User } from 'firebase';
 
@@ -43,7 +43,10 @@ export class ForumPageComponent implements OnInit, OnDestroy {
                         )
             ),
             mergeMap(post => {
-                const users: Set<string> = new Set(post.comments.map(({ ownerUid }) => ownerUid));
+                const users: Set<string> = new Set(post.comments?.map(({ ownerUid }) => ownerUid));
+                if (!users.size) {
+                    return of(post);
+                }
                 return combineLatest(
                     Array.from(users.values()).map(uid => this.afFunctions.httpsCallable('getUser')({ uid }))
                 ).pipe(
